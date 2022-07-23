@@ -1,0 +1,47 @@
+import { CreateUserDTO, UpdateUserDTO } from './users.model';
+import { User, UserDocument } from 'src/repo/schemas/user.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+
+@Injectable()
+export class UsersService {
+  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
+
+  async create(user: CreateUserDTO): Promise<User> {
+    const newUser = new this.userModel(user);
+
+    return newUser.save();
+  }
+
+  async update(id: string, updateInfo: UpdateUserDTO): Promise<any> {
+    const filter = { _id: id };
+    const query = this.userModel.updateOne(filter, updateInfo);
+
+    return query.exec();
+  }
+
+  async getOne(id: string): Promise<User> {
+    const query = this.userModel.findById(id, { __v: 0, posts: 0 });
+
+    return query.exec();
+  }
+
+
+
+  async getAll(): Promise<User[]> {
+    const query = this.userModel
+      .find({}, { __v: 0, posts: 0 })
+      .populate([{ path: 'roles', select: 'name' }]);
+
+    return query.exec();
+  }
+
+  getOneWithPost(): void {}
+
+  addPost(): void {}
+
+  removePost(): void {}
+
+  delete(): void {}
+}
