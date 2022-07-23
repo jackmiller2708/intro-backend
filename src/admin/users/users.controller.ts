@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
-import { CreateUserDTO, UpdateUserDTO, ValidateCreateUserDTO } from 'src/repo/services/users/users.model';
-import { UsersService } from 'src/repo/services/users/users.service';
+import { CreateUserDTO, ValidateCreateUserDTO, UpdateUserDTO } from './users.model';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
@@ -17,29 +17,21 @@ export class UsersController {
       .toSeq()
       .some((val) => val === 'unknown');
 
-    if (isDTOInvalid) {
-      throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST);
-    }
+    if (isDTOInvalid) throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST);
 
     return ((await this.userService.create(user)) as any)._id;
   }
 
   @Get(':id')
   async getUser(@Param('id') id: string) {
-    if (!id) {
-      throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST);
-    }
+    if (!id) throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST)
 
     return this.userService.getOne(id);
   }
 
   @Patch(':id')
   async updateUser(@Param('id') id: string,  @Body() newInfo: UpdateUserDTO): Promise<boolean> {
-    if (!id) {
-      throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST);
-    }
-
-    console.log(newInfo)
+    if (!id) throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST)
 
     const { acknowledged, modifiedCount } = await this.userService.update(id, newInfo);
 

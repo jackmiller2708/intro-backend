@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
-import { CreateRoleDTO, UpdateRoleDTO } from 'src/repo/services/roles/roles.model';
-import { RolesService } from 'src/repo/services/roles/roles.service';
+import { CreateRoleDTO, UpdateRoleDTO } from './roles.model';
 import { AppPermissions, Permission } from 'src/shared/auth/permissions';
+import { RolesService } from './roles.service';
 import { Role } from 'src/repo/schemas/role.schema';
 
 @Controller('roles')

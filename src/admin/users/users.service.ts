@@ -22,26 +22,18 @@ export class UsersService {
   }
 
   async getOne(id: string): Promise<User> {
-    const query = this.userModel.findById(id, { __v: 0, posts: 0 });
-
-    return query.exec();
-  }
-
-
-
-  async getAll(): Promise<User[]> {
     const query = this.userModel
-      .find({}, { __v: 0, posts: 0 })
+      .findById(id, { __v: 0, posts: 0 })
       .populate([{ path: 'roles', select: 'name' }]);
 
     return query.exec();
   }
 
-  getOneWithPost(): void {}
+  async getAll(): Promise<User[]> {
+    const query = this.userModel
+      .find({}, { __v: 0, posts: 0, firstName: 0, lastName: 0, password: 0 })
+      .populate([{ path: 'roles', select: 'name' }]);
 
-  addPost(): void {}
-
-  removePost(): void {}
-
-  delete(): void {}
+    return query.exec();
+  }
 }

@@ -1,5 +1,5 @@
 import { CreateRoleDTO, UpdateRoleDTO } from './roles.model';
-import { AppPermissions, Permission } from 'src/shared/auth/permissions';
+import { Permission, AppPermissions } from 'src/shared/auth/permissions';
 import { Role, RoleDocument } from 'src/repo/schemas/role.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
