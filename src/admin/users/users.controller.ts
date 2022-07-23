@@ -1,12 +1,15 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { CreateUserDTO, ValidateCreateUserDTO, UpdateUserDTO } from './users.model';
+import { AppPermissions } from 'src/shared/auth/permissions';
 import { UsersService } from './users.service';
+import { Authorize } from 'src/shared/decorator/Authorize.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
+  @Authorize(AppPermissions.PAGES_USER)
   async getAllUsers() {
     return this.userService.getAll();
   }
@@ -26,10 +29,10 @@ export class UsersController {
   async getUser(@Param('id') id: string) {
     if (!id) throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST)
 
-    return this.userService.getOne(id);
+    return this.userService.getOneById(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   async updateUser(@Param('id') id: string,  @Body() newInfo: UpdateUserDTO): Promise<boolean> {
     if (!id) throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST)
 

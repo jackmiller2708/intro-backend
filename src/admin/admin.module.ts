@@ -9,5 +9,6 @@ import { RolesService } from './roles/roles.service';
   imports: [RepoModule],
   controllers: [UsersController, RolesController],
   providers: [UsersService, RolesService],
+  exports: [UsersService]
 })
 export class AdminModule {}

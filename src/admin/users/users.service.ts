@@ -21,10 +21,18 @@ export class UsersService {
     return query.exec();
   }
 
-  async getOne(id: string): Promise<User> {
+  async getOneById(id: string): Promise<User> {
     const query = this.userModel
       .findById(id, { __v: 0, posts: 0 })
       .populate([{ path: 'roles', select: 'name' }]);
+
+    return query.exec();
+  }
+
+  async getOne(filter: User): Promise<User> {
+    const query = this.userModel
+      .findOne(filter, { __v: 0, posts: 0 })
+      .populate('roles');
 
     return query.exec();
   }
