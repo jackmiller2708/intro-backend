@@ -19,9 +19,6 @@ export class User {
   @Prop({ set: (password: string) => hashSync(password, 10) })
   password: string;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
-  posts: Post[];
-
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Role' }] })
   roles: Role[];
 }

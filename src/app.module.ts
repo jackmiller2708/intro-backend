@@ -10,6 +10,7 @@ import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './shared/auth/auth.module';
 import { RepoModule } from './repo/repo.module';
 import { Module } from '@nestjs/common';
+import { UserModule } from './user/user.module';
 
 import configuration from 'config/configuration';
 
@@ -24,6 +25,7 @@ import configuration from 'config/configuration';
     AdminModule,
     RepoModule,
     AuthModule,
+    UserModule,
   ],
   providers: [
     { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },

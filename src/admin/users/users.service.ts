@@ -23,7 +23,7 @@ export class UsersService {
 
   async getOneById(id: string): Promise<User> {
     const query = this.userModel
-      .findById(id, { __v: 0, posts: 0 })
+      .findById(id, { __v: 0 })
       .populate([{ path: 'roles', select: 'name' }]);
 
     return query.exec();
@@ -31,7 +31,7 @@ export class UsersService {
 
   async getOne(filter: User): Promise<User> {
     const query = this.userModel
-      .findOne(filter, { __v: 0, posts: 0 })
+      .findOne(filter, { __v: 0 })
       .populate('roles');
 
     return query.exec();
@@ -39,7 +39,7 @@ export class UsersService {
 
   async getAll(): Promise<User[]> {
     const query = this.userModel
-      .find({}, { __v: 0, posts: 0, firstName: 0, lastName: 0, password: 0 })
+      .find({}, { __v: 0, firstName: 0, lastName: 0, password: 0 })
       .populate([{ path: 'roles', select: 'name' }]);
 
     return query.exec();

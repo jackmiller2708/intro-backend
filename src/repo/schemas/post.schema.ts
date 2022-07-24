@@ -12,9 +12,6 @@ export class Post {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   author: User;
-
-  // @Prop()
-  // password: string;
 }
 
 type PostDocument = Post & Document;

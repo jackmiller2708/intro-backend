@@ -15,6 +15,7 @@ export class UsersController {
   }
 
   @Post()
+  @Authorize(AppPermissions.PAGES_USER_CREATE)
   async addUser(@Body() user: CreateUserDTO): Promise<string> {
     const isDTOInvalid = ValidateCreateUserDTO(user)
       .toSeq()
@@ -26,6 +27,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @Authorize(AppPermissions.PAGES_USER)
   async getUser(@Param('id') id: string) {
     if (!id) throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST)
 
@@ -33,6 +35,7 @@ export class UsersController {
   }
 
   @Put(':id')
+  @Authorize(AppPermissions.PAGES_ROLE_UPDATE)
   async updateUser(@Param('id') id: string,  @Body() newInfo: UpdateUserDTO): Promise<boolean> {
     if (!id) throw new HttpException('Invalid Params', HttpStatus.BAD_REQUEST)
 
@@ -42,6 +45,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @Authorize(AppPermissions.PAGES_USER_DELETE)
   async deleteUser(@Param('id') id: string) {
     return `deleted ${id}`;
   }

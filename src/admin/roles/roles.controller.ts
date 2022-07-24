@@ -2,14 +2,15 @@ import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put } fr
 import { CreateRoleDTO, UpdateRoleDTO } from './roles.model';
 import { AppPermissions, Permission } from 'src/shared/auth/permissions';
 import { RolesService } from './roles.service';
-import { Role } from 'src/repo/schemas/role.schema';
 import { Authorize } from 'src/shared/decorator/Authorize.decorator';
+import { Role } from 'src/repo/schemas/role.schema';
 
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
   @Get('permissions')
+  @Authorize(AppPermissions.PAGES_ROLE)
   getAllPermissions(): Permission {
     return this.rolesService.getPermissions();
   }
